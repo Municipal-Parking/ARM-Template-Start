@@ -2,6 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        //This allows for a param of your storage resource name
         "storageName": {
             "type": "string",
             "minLength": 3,
@@ -9,6 +10,21 @@
             "metadata": {
                 "description": "Name of Azure storage Resource"
             }
+        },
+        //This allows for a param of SKUs available
+        "storageSKU": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_ZRS",
+                "Premium-LRS",
+                "Premium_ZRS",
+                "Standard_GZRS",
+                "Standard_RAGZRS"
+            ]
         }
     },
     "functions": [],
@@ -23,7 +39,7 @@
         "location": "[resourceGroup().location]",
         "kind": "StorageV2",
         "sku": {
-            "name": "Standard_LRS",
+            "name": "[parameters('storageSKU')]",
             "tier": "Standard"
         }
     }],
